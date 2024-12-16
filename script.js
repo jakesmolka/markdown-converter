@@ -2,14 +2,7 @@ async function loadPyodideAndPackages() {
     let pyodide = await loadPyodide();
     await pyodide.loadPackage("micropip");
     const micropip = pyodide.pyimport("micropip");
-    await micropip.install("snowballstemmer");
     await micropip.install("markitdown");
-    await pyodide.runPython(`
-        # test to show pip install works on external dep
-        import snowballstemmer
-        stemmer = snowballstemmer.stemmer('english')
-        print(stemmer.stemWords('go goes going gone'.split()))
-    `);
     return pyodide;
 }
 
@@ -29,16 +22,10 @@ async function convertFile() {
         const pyodide = await loadPyodideAndPackages();
         pyodide.globals.set("file_bytes", uint8Array);
         pyodide.globals.set("file_extension", "." + file.name.split('.').pop());
-        //let buffer = pyodide.runPython(`
         await pyodide.runPython(`
             import io
-            #from js import uint8Array
             from markitdown import MarkItDown
 
-            #file_bytes = io.BytesIO(bytearray(${JSON.stringify(Array.from(uint8Array))}))
-            #file_bytes = io.BytesIO(bytearray(uint8Array))
-            #file_stream = io.BytesIO(uint8Array)
-            #file_stream = io.BytesIO(uint8Array.to_py())
             file_stream = io.BytesIO(file_bytes.to_py())
             print("GOT STREAM -> converting...")
             markitdown = MarkItDown()

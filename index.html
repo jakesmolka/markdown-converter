@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document to Markdown Converter</title>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="431b6539-fc1c-4ef6-9d6d-66d48edd352c"></script>
 </head>
 <body>
     <h1>Document to Markdown Converter</h1>
@@ -12,5 +13,13 @@
     <button onclick="convertFile()">Convert</button>
     <div id="markdownOutput"></div>
     <script src="script.js"></script>
+    <br>
+    <div>Local on-device converting only!</div>
+    <br>
+    <div>Based on 
+        <a href="https://github.com/microsoft/markitdown">MarkItDown</a>, 
+        executed as on-device WASM via 
+        <a href="https://github.com/pyodide/pyodide">Pyodide</a>.
+    </div>
 </body>
 </html>

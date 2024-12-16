@@ -9,14 +9,27 @@
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-    <h1>Document to Markdown Converter</h1>
-    <input type="file" id="fileInput" accept=".docx,.pdf">
+    <h1>Document to Markdown Converter - Beta</h1>
+    <input type="file" id="fileInput" accept=".pdf,.pptx,.docx,.xlsx,.jpg,.html,.csv,.json,.xml">
     <button onclick="convertFile()">Convert</button>
     <div id="markdownOutput"></div>
     <script src="script.js"></script>
     <br>
     <a class="notice">Local on-device converting only!</a>
     <br>
+    <div>
+        Supports:
+        <ul>
+            <li>PDF (.pdf)</li>
+            <li>PowerPoint (.pptx)</li>
+            <li>Word (.docx)</li>
+            <li>Excel (.xlsx)</li>
+            <li>WIP: Images (EXIF metadata, and OCR)</li>
+            <li>WIP: Audio (EXIF metadata, and speech transcription)</li>
+            <li>HTML (special handling of Wikipedia, etc.)</li>
+            <li>Various other text-based formats (csv, json, xml, etc.)</li>
+        </ul>
+    </div>
     <div>Based on 
         <a href="https://github.com/microsoft/markitdown">MarkItDown</a>, 
         executed as on-device WASM via 

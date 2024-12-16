@@ -1,8 +1,15 @@
+let pyodide; 
+
+window.onload = async function() { 
+    pyodide = await loadPyodideAndPackages(); 
+};
+
 async function loadPyodideAndPackages() {
-    let pyodide = await loadPyodide();
+    const pyodide = await loadPyodide();
     await pyodide.loadPackage("micropip");
     const micropip = pyodide.pyimport("micropip");
     await micropip.install("markitdown");
+    console.log("Pyodid and MarkItDown setup done.")
     return pyodide;
 }
 
@@ -19,7 +26,6 @@ async function convertFile() {
     reader.onload = async function(event) {
         const arrayBuffer = event.target.result;
         const uint8Array = new Uint8Array(arrayBuffer);
-        const pyodide = await loadPyodideAndPackages();
         pyodide.globals.set("file_bytes", uint8Array);
         pyodide.globals.set("file_extension", "." + file.name.split('.').pop());
         await pyodide.runPython(`
@@ -27,13 +33,12 @@ async function convertFile() {
             from markitdown import MarkItDown
 
             file_stream = io.BytesIO(file_bytes.to_py())
-            print("GOT STREAM -> converting...")
+            print("Python: got input -> converting...")
             markitdown = MarkItDown()
             result = markitdown.convert_stream(file_stream, file_extension=file_extension).text_content
-            print(result)
+            print("Python: converting done.")
             result
         `);
-        console.log("Done with runPython.");
         let markdownOutput = pyodide.globals.get('result');
         downloadMarkdownFile(markdownOutput, file.name);
     };

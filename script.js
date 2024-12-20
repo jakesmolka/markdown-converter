@@ -8,7 +8,7 @@ async function loadPyodideAndPackages() {
     const pyodide = await loadPyodide();
     await pyodide.loadPackage("micropip");
     const micropip = pyodide.pyimport("micropip");
-    await micropip.install("markitdown");
+    await micropip.install("markitdown==0.0.1a2");
     console.log("Pyodid and MarkItDown setup done.")
     return pyodide;
 }
